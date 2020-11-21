@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+        <link rel="stylesheet" type="text/css" href="task.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<label>Task Name</label>
+		<input type="text" id="name" class="i2"><br><br><br>
+		<div class = "btn">
+			<input type="button" class="btn1" id="submit" onClick="submitForm()" value="Submit">
+		</div>
+		<div id="result"><h4>To Do List</h4></div>
+		<div id="result1"><h4>Completed Task</h4>
+			<div id="right">
+				<ul>
+				</ul>
+			</div></div>
+        </body>
+	<script>
+	
+    var items = [];
+    var items2 = [];
+	function submitForm(){
+
+        var name =  document.getElementById('name').value;
+		for (var x = 0; x < items.length; x++) {
+			if (items[x].name === name) 
+			{
+			alert("id must be unique");
+				return;
+			}
+		}
+        var name = document.getElementById('name').value;
+        console.log(name);
+		
+		items.push(name);
+		display();
+		
+	}
+	function display()
+	{
+        var html = '';
+        html += '<h3>To Do List</h3>';
+		html += '<table><tr><th></th><th>Task Name</th><th></th><th>Action</th><th>Update</th></tr>';
+		for(var i=0; i<items.length;i++)
+		{
+            html += "<tr><td>"+i+"<input type='checkbox' onclick='addval("+i+")' id='check'/></td><td>"+items[i]+"</td><td><input type='text' id='name"+i+"' class='i2' value=''></td><td><button  id='btn'  class='g1' onclick='deleteRow(" + i + ")' >Delete</button></td><td><button class='g1' onclick='edit(" + i + ")' id='eid" + i + "'>Edit</button></td><td><button  id='id"+i+"' style='display:none' class='g1' onclick='update(" + i + ")'>Edit</button></td><tr>";
+		}
+		html += "</table>";
+		document.getElementById('result').innerHTML = html;
+       
+	}
+
+    function update(m)
+    {  
+        items[m] = document.getElementById("name"+m).value;
+        display();
+        document.getElementById("eid" +m).style.display = "inline-block";
+        document.getElementById("id" +m).style.display = "none";
+    }
+    function update1(m)
+    {
+        items2[m] = document.getElementById("name"+m).value;
+        display1();
+        document.getElementById("eid" +m).style.display = "inline-block";
+        document.getElementById("id" +m).style.display = "none";
+    
+    }
+	
+		
+	function deleteRow(row) 
+	{
+		items.splice(row,1);
+		display();
+		
+    }
+    
+    function deleteRow1(row) 
+	{
+		items2.splice(row,1);
+		display1();
+		
+    }
+    
+    function edit(j)
+    {
+        document.getElementById("name" +j).value = items[j];
+        document.getElementById("eid" +j+"").style.display = "none";
+        document.getElementById("id" +j+"").style.display = "inline";
+       
+    }
+    function edit1(j)
+    {
+        document.getElementById("name" +j).value = items2[j];
+        document.getElementById("eid" +j).style.display = "none";
+        document.getElementById("id" +j).style.display = "inline";
+       
+    }
+
+	
+	function display1()
+	{
+        var html = '';
+        html += '<h3>Completed Task</h3>';
+		html += '<table><tr><th></th><th>Task Name</th><th></th><th>Action</th><th>Update</th></tr>';
+		for(var i=0; i<items2.length;i++)
+		{
+            html += "<tr><td>"+i+"<input checked type='checkbox' onclick='addval1("+i+")' id='check'/></td><td>"+items2[i]+"</td><td><input type='text' id='name"+i+"' class='i2' value=''></td><td><button  id='btn'  class='g1' onclick='deleteRow1(" + i + ")' >Delete</button></td><td><button class='g1' onclick='edit1(" + i + ")' id='eid" + i + "'>Edit</button></td><td><button  id='id"+i+"' style='display:none' class='g1' onclick='update1(" + i + ")'>Edit</button></td><tr>";
+		}
+		html += "</table>";
+		document.getElementById('result1').innerHTML = html;
+
+    }
+    
+    function addval(id){
+        for(var i=0; i<items.length; i++)
+        {
+            if(i == id)
+            {
+                items2.push(items[i]);
+                items.pop(items[i]);
+    
+                console.log(items2);
+               
+            }
+        }  
+        display();
+        display1();
+    }   
+    function addval1(id){
+        for(var i=0; i<items2.length; i++)
+        {
+            if(i == id)
+            {
+                items.push(items2[i]);
+                items2.pop(items2[i]);
+    
+                console.log(items2);
+                
+            }
+        }  
+        display();
+        display1();
+    }   
+</script>
+
+</html>
